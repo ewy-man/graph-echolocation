@@ -131,6 +131,10 @@ map(length, wrgraphlists)
 
 shows there is one walk-regular, non-vertex-transitive graph on 12 vertices each of degree 4, 5, 6, and 7, and no others.
 
+# Examples
+
+The `examples.zip` file contains a zipped folder containing subdirectories `ncvs`, `regular`, and `walkregular`. Each of these subdirectories contains an exhaustive list of nonisomorphic graphs (actually, their adjacency matrices) saved as .csv files. These files can be loaded in bulk using the `load_graphs(dir::String)` function. This will load all files in the directory `dir` and return their parsed contents as a list of objects of type `Graph`. Use this in conjunction with the GraphPlot package (https://github.com/JuliaGraphs/GraphPlot.jl) to visualize the minimal examples.
+
 # Checks for validity
 
 Many of the functions are easy to check for validity. The hardest to check are likely the search functions `get_graphs` and `get_reg_graphs`, which use a recursive search with some optimizations. Looking into the code, we see indeed that we use the `has_isomorph` function from the Graphs package to ensure that no two graphs in the resulting list are isomorphic.
