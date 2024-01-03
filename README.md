@@ -39,7 +39,7 @@ Next, we need functions which determine when pairs of vertices are cospectral, a
 
 * `get_loops(g::Graph)` returns an n by n-1 matrix `L` of integers, where n is the number of vertices in `g`. The entry `L[i,k]` is equal to `(A^k)_{i,i}`, i.e. the number of walks of length `k` starting and ending at vertex `i`. By Theorem 1.1 in our paper, vertices `i` and `j` are cospectral if and only if `L[i,:] == L[j,:]`.
 * `is_walk_regular(g::Graphs)` returns `true` if `g` is walk-regular and `false` otherwise. This function calls `get_loops` and checks if all vertics are cospectral.
-* `nonsimilar_cospectral_vertices(g::Graph)` returns a list of all pairs `(i,j)` of vertices `i` and `j` which are cospectral but not similar. Calls both `get_loops` and `get_orbits`.
+* `ncvs(g::Graph)` returns a list of all pairs `(i,j)` of vertices `i` and `j` which are cospectral but not similar. Calls both `get_loops` and `get_orbits`.
 * `has_ncvs(g::Graph)` is a function which returns `true` if the graph `g` contains non-similar cospectral vertices. This is fed as a filter to the search functions above. Calls `nonsimilar_cospectral_vertices` to check if the result is empty.
 
 # How to search for minimal examples
@@ -139,4 +139,4 @@ Thankfully, we don't need to prove the search is exhaustive for all cases, we on
 
 To verify `get_graphs(n)` is exhaustive, we check that the length of the result is equal to the number of non-isomorphic graphs on `n` unlabeled nodes from the Online Encyclopedia of Integer Sequences (https://oeis.org/A000088) for `n` from 1 to 8. The function `test()` does just this. This function takes a minute or two to execute.
 
-To verify `get_reg_graphs(n)` is exhaustive, we do very much the same thing, checking against the number of non-isomorphic regular graphs on `n` unlabeled nodes (https://oeis.org/A005176). The case `n == 12` takes a day or two to run on my personal computer, but this case isn't as important to the result as the cases `n < 12`.
+To verify `get_reg_graphs(n)` is exhaustive, we do very much the same thing, checking against the number of non-isomorphic regular graphs on `n` unlabeled nodes (https://oeis.org/A005176). The case `n == 12` takes at least multiple days to run on my personal computer, and I have not let it finish running. Thankfully, show this case is exhaustive isn't as important to the result as the cases `n < 12`.
