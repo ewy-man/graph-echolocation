@@ -292,7 +292,61 @@ function save_walkreg_examples()
     end
 end
 
-# To do: load graphs.
+"""
+    load_csv(filename::String)
+
+Loads a .csv file with (with column delimiter "," and row delimiter "\n")
+of an adjacency matrix and returns the associated graph.
+
+# Example
+With the current directory containing the unzipped `examples` folder:
+
+```
+julia> g = load_csv("examples/ncvs/ncvs1.csv")
+```
+
+This loads the file `ncvs1.csv` and parses it into an object `g` of type
+`Graph`.
+"""
+function load_csv(filename::String)
+    # Read file.
+    io = open(filename, "r")
+    contents = read(io, String)
+    close(io)
+
+    # Parse contents to a matrix.
+    lines = split(contents, "\n")
+    n = length(lines)
+    A = zeros(Int, n, n)
+    for i in 1:n
+        entries = split(lines[i], ",")
+        for j in 1:n
+            A[i,j] = parse(Int, entries[j])
+        end
+    end
+
+    # Return the graph from the matrix.
+    return Graph(A)
+end
+
+"""
+    load_examples(dir::String)
+
+Loads graphs from the files in the given directory and returns them
+as a list of objects of type `Graph`.
+
+# Example
+With the unzipped `examples` in the current working directory:
+
+```julia> graph_list = load_examples("examples/ncvs")
+```
+
+This command returns a list `graph_list` of all 126 graphs saved as
+.csv files in the `examples/ncvs` directory.
+"""
+function load_examples(dir::String)
+    return [load_csv(filename) for filename in readdir(dir; join=true)]
+end
 
 ### CHECKS FOR VALIDITY ###
 
